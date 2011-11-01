@@ -13,9 +13,11 @@
 @synthesize dataLabel = _dataLabel;
 @synthesize dataObject = _dataObject;
 
-#define iPHONE_PORTRAIT_KEYBOARD_HEIGHT 215
-#define iPAD_PORTRAIT_KEYBOARD_HEIGHT 260
-#define PORTRAIT_KEYBOARD_HEIGHT ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?iPHONE_PORTRAIT_KEYBOARD_HEIGHT:iPAD_PORTRAIT_KEYBOARD_HEIGHT)
+/*#define iPHONE_PORTRAIT_KEYBOARD_HEIGHT 216
+#define iPHONE_LANDSCAPE_KEYBOARD_HEIGHT 116
+#define iPAD_PORTRAIT_KEYBOARD_HEIGHT 264
+#define iPAD_LANDSCAPE_KEYBOARD_HEIGHT 352
+#define PORTRAIT_KEYBOARD_HEIGHT ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?(UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])?iPHONE_PORTRAIT_KEYBOARD_HEIGHT:iPHONE_LANDSCAPE_KEYBOARD_HEIGHT):(UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])?iPAD_PORTRAIT_KEYBOARD_HEIGHT:iPAD_LANDSCAPE_KEYBOARD_HEIGHT))*/
 
 
 - (void)didReceiveMemoryWarning
@@ -31,6 +33,10 @@
     [super viewDidLoad];
 
 	// Do any additional setup after loading the view, typically from a nib.
+	
+	shouldIgnoreAction = YES;
+	[self webViewLoadURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]];
+	[webView setScalesPageToFit:YES];
 }
 
 - (void)viewDidUnload
@@ -50,11 +56,15 @@
 	[[UIApplication sharedApplication] openURL:url];
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+	[self.view setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+	[searchResultsTable removeFromSuperview];
 	searchResultsTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+	[searchResultsTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
 	[searchResultsTable setDelegate:self];
 	[searchResultsTable setDataSource:self];
 	[[self view] addSubview:searchResultsTable];
@@ -74,12 +84,27 @@
 	
 	[webView loadHTMLString:wikiMainSite baseURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]];*/
 	//[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]]];
-	shouldIgnoreAction = YES;
-	[self webViewLoadURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]];
+	//shouldIgnoreAction = YES;
+	//[self webViewLoadURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]];
 	/*
 	UIMenuItem *openInSafariItem = [[UIMenuItem alloc] initWithTitle:@"Open in Safari" action:@selector(openInSafari:)];
 	UIMenuItem *saveImageItem = [[UIMenuItem alloc] initWithTitle:@"Save" action:@selector(saveImage:)];
 	[[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:openInSafariItem, saveImageItem, nil]];*/
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+	CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+	UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+	CGRect keyboardFrameConverted = [self.view convertRect:keyboardFrame fromView:window];
+	NSLog(@"Keyboard did show! height is %.0fpx", keyboardFrameConverted.size.height);
+	[UIView animateWithDuration:0.25 animations:^(void){
+		[searchBar setCenter:CGPointMake([searchBar center].x, [searchBar center].y-keyboardFrameConverted.size.height)];
+		[bottomNavBar setCenter:CGPointMake([bottomNavBar center].x, [bottomNavBar center].y-keyboardFrameConverted.size.height)];
+	} completion:^(BOOL finished) {
+		NSLog(@"Completed! moved search bar center to %.0fpx", [searchBar center].y);
+		[self showSearchResults];
+	}];
+	//[searchBar resignFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -141,17 +166,30 @@
 		//[[UIApplication sharedApplication] openURL:[[webView request] URL]];
 		[self settingsButtonPressed:nil];
 	}
+	else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Upload Picture"]) {
+		//[[UIApplication sharedApplication] openURL:[[webView request] URL]];
+		[self cameraButtonPressed:bottomFullBar];
+	}
 }
 
 - (IBAction)moreButtonPressed:(id)sender {
 	[bottomFullBar setHidden:NO];
 	//[bottomLeftNavBar setAlpha:0.0f];
 	CGRect appSize =  [(UIScreen *)[[UIScreen screens] objectAtIndex:0] applicationFrame];
-	[UIView animateWithDuration:0.25 animations:^(void){
-		[searchBar setFrame:CGRectMake(-[searchBar frame].size.width, [searchBar frame].origin.y, [searchBar frame].size.width, [searchBar frame].size.height)];
-		[bottomNavBar setFrame:CGRectMake(appSize.size.width, [bottomNavBar frame].origin.y, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
-		//[bottomLeftNavBar setAlpha:1.0f];
-	}];
+	if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+		[UIView animateWithDuration:0.25 animations:^(void){
+			[searchBar setFrame:CGRectMake(-[searchBar frame].size.width, [searchBar frame].origin.y, [searchBar frame].size.width, [searchBar frame].size.height)];
+			[bottomNavBar setFrame:CGRectMake(appSize.size.width, [bottomNavBar frame].origin.y, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
+			//[bottomLeftNavBar setAlpha:1.0f];
+		}];
+	}
+	else {
+		[UIView animateWithDuration:0.25 animations:^(void){
+			[searchBar setFrame:CGRectMake(-[searchBar frame].size.width, [searchBar frame].origin.y, [searchBar frame].size.width, [searchBar frame].size.height)];
+			[bottomNavBar setFrame:CGRectMake(appSize.size.height, [bottomNavBar frame].origin.y, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
+			//[bottomLeftNavBar setAlpha:1.0f];
+		}];
+	}
 }
 
 - (IBAction)searchButtonPressed:(id)sender {
@@ -190,6 +228,87 @@
 	//[[self undoManager] enableUndoRegistration];
 }
 
+- (IBAction)cameraButtonPressed:(id)sender {
+	[self showImagePicker:sender];
+}
+
+#pragma mark - Image Chooser Stuff
+
+- (IBAction)showImagePicker:(id)sender {
+	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+	[picker setDelegate:self];
+	[picker setAllowsEditing:NO];
+	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		picker.showsCameraControls = YES;
+		picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+	}
+	else {
+		picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+	}
+	if (IS_IPAD) {
+		UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:picker];
+		if ([sender class] == [UIBarButtonItem class]) {
+			[popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		else if (sender == nil) {
+			[popover presentPopoverFromRect:CGRectZero inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		else {
+			[popover presentPopoverFromRect:CGRectMake([sender frame].origin.x, [sender frame].origin.y, [sender frame].size.width, [sender frame].size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		popoverController = popover;
+	}
+	else {
+		[self presentModalViewController:picker animated:YES];
+	}
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	if (IS_IPAD) {
+		[popoverController dismissPopoverAnimated:NO];
+	}
+	else {
+		[picker.presentingViewController dismissModalViewControllerAnimated:NO];
+	}
+	NSLog(@"Picking Finished, info: %@", [info valueForKey:UIImagePickerControllerMediaURL]);
+	[self uploadImageFromURL:[info valueForKey:UIImagePickerControllerMediaURL] image:[info valueForKey:UIImagePickerControllerOriginalImage]];
+	
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+	if (IS_IPAD) {
+		[(UIPopoverController *)picker.parentViewController dismissPopoverAnimated:YES];
+	}
+	else {
+		[picker.presentingViewController dismissModalViewControllerAnimated:YES];
+	}
+}
+
+- (void)uploadImageFromURL:(NSURL *)url image:(UIImage *)imageToUpload{
+	NSLog(@"Upload img from url (%@)", url.absoluteString);
+	CommonsUpload *upload = [[CommonsUpload alloc] init];
+	[upload setDelegate:self];
+	[upload setOriginalImage:imageToUpload];
+	[upload setImageURL:url];
+	
+	ImageDetailsViewController *imgDetailsVC = [[ImageDetailsViewController alloc] init];
+	[imgDetailsVC setUpload:upload];
+	[self presentModalViewController:imgDetailsVC animated:YES];
+	//[upload setImageTitle:[NSString stringWithFormat:@"%@.jpg", @"Test Title"]];
+	//[upload setDescription:@"Test Description"];
+	/*ImageUploadViewController *imgUploader = [[ImageUploadViewController alloc] init];
+	imgUploader.upload = upload;
+	//[self presentModalViewController:imgUploader animated:YES];
+	[self presentViewController:imgUploader animated:YES completion:^{
+		NSLog(@"Completed imgUploader");
+	}];*/
+	//[upload uploadImage];
+	//[self.presentedViewController.navigationController pushViewController:imgUploader animated:YES];
+}
+
 #pragma mark - Web View Stuff
 
 - (void)webViewLoadURL:(NSURL *)url {
@@ -205,11 +324,9 @@
 	[loadingBacking setHidden:NO];
 	[loadingIndicator startAnimating];
 	if (!shouldIgnoreAction) {
-		[[self undoManager] beginUndoGrouping];
-		[[self undoManager] registerUndoWithTarget:webView selector:@selector(loadRequest:) object:[aWebView request]];
-		[[self undoManager] setActionName:[NSString stringWithFormat:@"Action: %@", [[aWebView request].URL absoluteString]]];
-		[[self undoManager] endUndoGrouping];
-		NSLog(@"Registered request of %@", [aWebView request].URL);
+		[[self undoManager] registerUndoWithTarget:webView selector:@selector(loadRequest:) object:[webView request]];
+		[[self undoManager] setActionName:[NSString stringWithFormat:@"Action: %@", [[webView request].URL absoluteString]]];
+		NSLog(@"Registered request of %@", [webView request].URL);
 	}
 	shouldIgnoreAction = NO;
 }
@@ -241,12 +358,12 @@
 }
 
 - (BOOL)webView:(UIWebView *)aWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-	if (didConvertURL) {
+	if (didConvertURL && [[[request URL] absoluteString] rangeOfString:@".wikipedia"].location != NSNotFound) {
 		didConvertURL = NO;
 		return YES;
 	}
-	if ([[[request URL] absoluteString] rangeOfString:@".wiki"].location != NSNotFound) {
-		//NSLog(@"The link is on wiki");
+	if ([[[request URL] absoluteString] rangeOfString:@".wikipedia"].location != NSNotFound) {
+		NSLog(@"The link is on wikipedia (%@)", [[request URL] absoluteString]);
 		didConvertURL = NO;
 		if ([[[request URL] absoluteString] rangeOfString:@"m.wiki"].location == NSNotFound) {
 			//NSLog(@"No m.wiki found");
@@ -258,12 +375,23 @@
 		else {
 			//NSLog(@"It is on m.wiki");
 			if (didConvertURL) {
+				didConvertURL = NO;
 				return YES;
 			}
 			//[webView loadHTMLString:[self convertMobilePageFromURL:[NSURL URLWithString:[[[request URL] absoluteString] stringByReplacingOccurrencesOfString:@"m.wiki" withString:@"wiki"]]] baseURL:[NSURL URLWithString:@"http://en.wikipedia.org"]];
 			[self convertPageAndGo:[NSURL URLWithString:[[[request URL] absoluteString] stringByReplacingOccurrencesOfString:@"m.wiki" withString:@"wiki"]]];
 			didConvertURL = YES;
 			return NO;
+		}
+	}
+	else {
+		NSLog(@"Not on wikipedia");
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:OPEN_LINKS_IN_SAFARI_KEY]) {
+			[self openLinkInSafari:[request URL]];
+			return NO;
+		}
+		else {
+			return YES;
 		}
 	}
 	return YES;
@@ -296,7 +424,7 @@
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar {
 	//NSLog(@"Going from %@ to %@", NSStringFromCGPoint([searchBar center]), NSStringFromCGPoint(CGPointMake([searchBar center].x, [searchBar center].y+CGRectFromString(UIKeyboardFrameEndUserInfoKey).origin.y)));
 	[self raiseSearchBar];
-	[self showSearchResults];
+	//[self showSearchResults];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar {
@@ -356,10 +484,10 @@
 
 - (void)raiseSearchBar {
 	[moreButton setEnabled:NO];
-	[UIView animateWithDuration:0.25 animations:^(void){
+	/*[UIView animateWithDuration:0.25 animations:^(void){
 		[searchBar setCenter:CGPointMake([searchBar center].x, [searchBar center].y-PORTRAIT_KEYBOARD_HEIGHT)];
 		[bottomNavBar setCenter:CGPointMake([bottomNavBar center].x, [bottomNavBar center].y-PORTRAIT_KEYBOARD_HEIGHT)];
-	}];
+	}];*/
 	[searchBar setShowsCancelButton:YES animated:YES];
 }
 

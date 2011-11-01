@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "SearchResult.h"
 #import "SettingsView.h"
+#import "Configuration.h"
+#import "CommonsUpload.h"
+#import "ImageUploadViewController.h"
+#import "ImageDetailsViewController.h"
 
-@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate> {
+@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationBarDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, CommonsUploadDelegate> {
 	IBOutlet UIActivityIndicatorView *indView;
 	IBOutlet UIWebView *webView;
 	IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -18,13 +22,14 @@
 	IBOutlet UISearchBar *searchBar;
 	IBOutlet UINavigationBar *bottomNavBar, *topNavBar;
 	IBOutlet UIToolbar *bottomFullBar;
-	IBOutlet UIBarButtonItem *actionButton, *moreButton, *settingsButton, *searchButton, *reloadButton;
+	IBOutlet UIBarButtonItem *actionButton, *moreButton, *settingsButton, *searchButton, *reloadButton, *cameraButton;
 	IBOutlet UISegmentedControl *historyControlButton;
 	UITableView *searchResultsTable;
 	NSMutableString *currentElementValue;
 	SearchResult *result;
 	NSMutableArray *results;
 	BOOL didConvertURL, shouldIgnoreAction;
+	UIPopoverController *popoverController;
 }
 
 - (IBAction)historyControl:(UISegmentedControl *)sender;
@@ -38,9 +43,13 @@
 - (IBAction)moreButtonPressed:(id)sender;
 - (IBAction)searchButtonPressed:(id)sender;
 - (IBAction)settingsButtonPressed:(id)sender;
+- (IBAction)cameraButtonPressed:(id)sender;
+- (IBAction)showImagePicker:(id)sender;
 - (void)searchForQuery:(NSString *)query;
 - (NSString *)convertMobilePageFromURL:(NSURL *)pageURL;
 - (void)convertPageAndGo:(NSURL *)pageURL;
+- (void)keyboardDidShow:(NSNotification *)notification;
+- (void)uploadImageFromURL:(NSURL *)url image:(UIImage *)imageToUpload;
 
 @property (strong, nonatomic) IBOutlet UILabel *dataLabel;
 @property (strong, nonatomic) id dataObject;

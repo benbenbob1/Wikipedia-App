@@ -10,11 +10,11 @@
 
 @implementation SettingsView
 
-enum {
+/*enum {
 	kOpenLinksInSafariTag,
 	kNotifyWhenNearbyTag,
 	kAddGPSCoordsTag
-};
+};*/
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -111,13 +111,13 @@ enum {
 		[cell setAccessoryView:switchView];
 		if (indexPath.row == 0) {
 			cell.textLabel.text = @"Open web links in Safari";
-			[switchView setTag:kOpenLinksInSafariTag];
-			[switchView setOn:[defs boolForKey:@"openLinksInSafari"]];
+			[switchView setTag:OPEN_LINKS_IN_SAFARI_TAG];
+			[switchView setOn:[defs boolForKey:OPEN_LINKS_IN_SAFARI_KEY]];
 		}
 		else if (indexPath.row == 1) {
 			cell.textLabel.text = @"Notify me to take pictures when I am near an article that needs them";
-			[switchView setTag:kNotifyWhenNearbyTag];
-			[switchView setOn:[defs boolForKey:@"notifyWhenNearby"]];
+			[switchView setTag:NOTIFY_WHEN_NEARBY_TAG];
+			[switchView setOn:[defs boolForKey:NOTIFY_WHEN_NEARBY_KEY]];
 			//CGRect appSize =  [(UIScreen *)[[UIScreen screens] objectAtIndex:0] applicationFrame];
 			//[cell.textLabel setFrame:CGRectMake(cell.textLabel.frame.origin.x, cell.textLabel.frame.origin.y, appSize.size.width*0.75, cell.textLabel.frame.size.height)];
 		}
@@ -149,9 +149,9 @@ enum {
 		else if (indexPath.row == 2) {
 			cell.textLabel.text = @"Attach GPS coordinates";
 			UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-			[switchView setTag:kAddGPSCoordsTag];
+			[switchView setTag:ADD_GPS_COORDS_TAG];
 			[switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-			[switchView setOn:[defs boolForKey:@"addGPSCoords"]];
+			[switchView setOn:[defs boolForKey:ADD_GPS_COORDS_KEY]];
 			[cell setAccessoryView:switchView];
 		}
 	}
@@ -206,15 +206,21 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 0 || (indexPath.section == 1 && indexPath.row == 2)) {
-		[self switchAction:[settingsTable cellForRowAtIndexPath:indexPath].accessoryView];
+		[self switchAction:(UISwitch *)[settingsTable cellForRowAtIndexPath:indexPath].accessoryView];
 	}
-	else if (indexPath.section == 1 && indexPath.row == 1) {
-		LicensePickerViewController *licenseView = [[LicensePickerViewController alloc] initWithNibName:@"LicensePickerViewController" bundle:nil];
-		[licenseView setDelegate:self];
-		NSArray *licenses = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Licenses" ofType:@"plist"]];
-		[licenseView setLicenses:licenses];
-		[licenseView setSelectedLicense:licenseSelected];
-		[self presentModalViewController:licenseView animated:YES];
+	else if (indexPath.section == 1) {
+		if (indexPath.row == 0) {
+			LoginPage *loginView = [[LoginPage alloc] initWithStyle:UITableViewStyleGrouped];
+			[self presentModalViewController:loginView animated:YES];
+		}
+		else if (indexPath.row == 1) {
+			LicensePickerViewController *licenseView = [[LicensePickerViewController alloc] initWithNibName:@"LicensePickerViewController" bundle:nil];
+			[licenseView setDelegate:self];
+			NSArray *licenses = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Licenses" ofType:@"plist"]];
+			[licenseView setLicenses:licenses];
+			[licenseView setSelectedLicense:licenseSelected];
+			[self presentModalViewController:licenseView animated:YES];
+		}
 	}
 	else if (indexPath.section == 2) {
 		[self saveAndReturn];
@@ -232,17 +238,17 @@ enum {
 
 - (void)switchAction:(UISwitch *)sender {
 	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-	if ([sender tag] == kOpenLinksInSafariTag) {
+	if ([sender tag] == OPEN_LINKS_IN_SAFARI_TAG) {
 		NSLog(@"kOpenLinksInSafariTag changed to %i!", [sender isOn]);
-		[defs setBool:![defs boolForKey:@"openLinksInSafari"] forKey:@"openLinksInSafari"];
+		[defs setBool:![defs boolForKey:OPEN_LINKS_IN_SAFARI_KEY] forKey:OPEN_LINKS_IN_SAFARI_KEY];
 	}
-	else if ([sender tag] == kNotifyWhenNearbyTag) {
+	else if ([sender tag] == NOTIFY_WHEN_NEARBY_TAG) {
 		NSLog(@"kNotifyWhenNearbyTag changed!");
-		[defs setBool:![defs boolForKey:@"notifyWhenNearby"] forKey:@"notifyWhenNearby"];
+		[defs setBool:![defs boolForKey:NOTIFY_WHEN_NEARBY_KEY] forKey:NOTIFY_WHEN_NEARBY_KEY];
 	}
-	else if ([sender tag] == kAddGPSCoordsTag) {
+	else if ([sender tag] == ADD_GPS_COORDS_TAG) {
 		NSLog(@"kAddGPSCoordsTag changed!");
-		[defs setBool:![defs boolForKey:@"addGPSCoords"] forKey:@"addGPSCoords"];
+		[defs setBool:![defs boolForKey:ADD_GPS_COORDS_KEY] forKey:ADD_GPS_COORDS_KEY];
 	}
 	[defs synchronize];
 	[settingsTable reloadData];

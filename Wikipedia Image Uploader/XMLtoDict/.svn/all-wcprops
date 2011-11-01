@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/mediawiki/!svn/ver/84816/trunk/tools/WikiSnaps/Classes/XMLtoDict
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/mediawiki/!svn/ver/80838/trunk/tools/WikiSnaps/Classes/XMLtoDict/LICENSE
+END
+XMLReader.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/mediawiki/!svn/ver/84816/trunk/tools/WikiSnaps/Classes/XMLtoDict/XMLReader.h
+END
+XMLReader.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/mediawiki/!svn/ver/84816/trunk/tools/WikiSnaps/Classes/XMLtoDict/XMLReader.m
+END

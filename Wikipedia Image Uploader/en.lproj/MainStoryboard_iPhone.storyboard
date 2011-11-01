@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <webView multipleTouchEnabled="YES" contentMode="center" id="uSX-KL-Dvg">
+                            <webView multipleTouchEnabled="YES" contentMode="center" scalesPageToFit="YES" id="uSX-KL-Dvg">
                                 <rect key="frame" x="0.0" y="44" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,13 +31,20 @@
                                             <action selector="searchButtonPressed:" destination="5" id="gtf-ex-oR8"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem systemItem="camera" id="hqV-DK-mhl"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dlb-4U-jPo"/>
+                                    <barButtonItem systemItem="camera" id="hqV-DK-mhl">
+                                        <connections>
+                                            <action selector="cameraButtonPressed:" destination="5" id="QIN-9I-rlI"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="q0E-a1-u4d"/>
                                     <barButtonItem image="19-gear.png" width="39" id="rBi-6y-3NS">
                                         <inset key="imageInsets" minX="8" minY="4" maxX="8" maxY="4"/>
                                         <connections>
                                             <action selector="settingsButtonPressed:" destination="5" id="gUT-vm-B45"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="e2h-CV-lp2"/>
                                     <barButtonItem image="74-location.png" id="f5j-I7-gin"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yKy-wt-1Jt"/>
                                     <barButtonItem systemItem="action" id="Pud-By-41g">
@@ -49,7 +56,7 @@
                             </toolbar>
                             <searchBar contentMode="redraw" barStyle="blackOpaque" text="" id="eIW-CK-e61">
                                 <rect key="frame" x="0.0" y="416" width="197" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
@@ -61,7 +68,7 @@
                             </searchBar>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="gQU-W3-6ed">
                                 <rect key="frame" x="197" y="416" width="123" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <navigationItem id="cOs-6U-YNn">
                                         <nil key="title"/>
@@ -133,6 +140,7 @@
                         <outlet property="actionButton" destination="xaV-qb-RHw" id="wId-fM-D2l"/>
                         <outlet property="bottomFullBar" destination="0h3-qm-wYo" id="JH5-hB-GQX"/>
                         <outlet property="bottomNavBar" destination="gQU-W3-6ed" id="xre-3K-A4P"/>
+                        <outlet property="cameraButton" destination="hqV-DK-mhl" id="mca-Ka-Ghj"/>
                         <outlet property="historyControlButton" destination="0V3-eI-U6l" id="3KM-ko-gyI"/>
                         <outlet property="loadingBacking" destination="pAC-vL-NDn" id="V7r-TV-2pX"/>
                         <outlet property="loadingIndicator" destination="3AM-rL-VJl" id="dtf-7P-jP5"/>
@@ -170,6 +178,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/wikiDataViewController.h"/>
             <relationships>
                 <relationship kind="action" name="actionButtonPressed:"/>
+                <relationship kind="action" name="cameraButtonPressed:"/>
                 <relationship kind="action" name="historyControl:" candidateClass="UISegmentedControl"/>
                 <relationship kind="action" name="moreButtonPressed:"/>
                 <relationship kind="action" name="searchButtonPressed:"/>
@@ -177,6 +186,7 @@
                 <relationship kind="outlet" name="actionButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bottomFullBar" candidateClass="UIToolbar"/>
                 <relationship kind="outlet" name="bottomNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="cameraButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="dataLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="historyControlButton" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="indView" candidateClass="UIActivityIndicatorView"/>
