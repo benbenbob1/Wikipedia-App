@@ -1,0 +1,347 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B5158793145E2CCC003C0AE3 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B5158792145E2CCB003C0AE3 /* SearchResult.m */; };
+		B53BBFE3145F75D10057447B /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = B53BBFE1145F75D10057447B /* 19-gear.png */; };
+		B53BBFE4145F75D10057447B /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = B53BBFE2145F75D10057447B /* 74-location.png */; };
+		B53BBFF3145F77680057447B /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B53BBFF1145F77680057447B /* SettingsView.m */; };
+		B53BBFF4145F77680057447B /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53BBFF2145F77680057447B /* SettingsView.xib */; };
+		B588B751145B673000F29DC9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B588B750145B673000F29DC9 /* UIKit.framework */; };
+		B588B753145B673000F29DC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B588B752145B673000F29DC9 /* Foundation.framework */; };
+		B588B755145B673000F29DC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B588B754145B673000F29DC9 /* CoreGraphics.framework */; };
+		B588B75B145B673000F29DC9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B588B759145B673000F29DC9 /* InfoPlist.strings */; };
+		B588B75D145B673000F29DC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B75C145B673000F29DC9 /* main.m */; };
+		B588B761145B673000F29DC9 /* wikiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B760145B673000F29DC9 /* wikiAppDelegate.m */; };
+		B588B764145B673000F29DC9 /* wikiRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B763145B673000F29DC9 /* wikiRootViewController.m */; };
+		B588B767145B673000F29DC9 /* wikiDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B766145B673000F29DC9 /* wikiDataViewController.m */; };
+		B588B76A145B673000F29DC9 /* wikiModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B769145B673000F29DC9 /* wikiModelController.m */; };
+		B588B76D145B673000F29DC9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B588B76B145B673000F29DC9 /* MainStoryboard_iPhone.storyboard */; };
+		B588B770145B673000F29DC9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B588B76E145B673000F29DC9 /* MainStoryboard_iPad.storyboard */; };
+		B5C80187145F88EC00358324 /* Licenses.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5C80186145F88EC00358324 /* Licenses.plist */; };
+		B5C8018C145F88F700358324 /* LicensePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C8018A145F88F700358324 /* LicensePickerViewController.m */; };
+		B5C8018D145F88F700358324 /* LicensePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C8018B145F88F700358324 /* LicensePickerViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B5158791145E2CCB003C0AE3 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		B5158792145E2CCB003C0AE3 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		B53BBFE1145F75D10057447B /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
+		B53BBFE2145F75D10057447B /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
+		B53BBFF0145F77680057447B /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		B53BBFF1145F77680057447B /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		B53BBFF2145F77680057447B /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		B588B74C145B673000F29DC9 /* Wikipedia Image Uploader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wikipedia Image Uploader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B588B750145B673000F29DC9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B588B752145B673000F29DC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B588B754145B673000F29DC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B588B758145B673000F29DC9 /* Wikipedia Image Uploader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wikipedia Image Uploader-Info.plist"; sourceTree = "<group>"; };
+		B588B75A145B673000F29DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B588B75C145B673000F29DC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B588B75E145B673000F29DC9 /* Wikipedia Image Uploader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wikipedia Image Uploader-Prefix.pch"; sourceTree = "<group>"; };
+		B588B75F145B673000F29DC9 /* wikiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikiAppDelegate.h; sourceTree = "<group>"; };
+		B588B760145B673000F29DC9 /* wikiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wikiAppDelegate.m; sourceTree = "<group>"; };
+		B588B762145B673000F29DC9 /* wikiRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikiRootViewController.h; sourceTree = "<group>"; };
+		B588B763145B673000F29DC9 /* wikiRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wikiRootViewController.m; sourceTree = "<group>"; };
+		B588B765145B673000F29DC9 /* wikiDataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikiDataViewController.h; sourceTree = "<group>"; };
+		B588B766145B673000F29DC9 /* wikiDataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wikiDataViewController.m; sourceTree = "<group>"; };
+		B588B768145B673000F29DC9 /* wikiModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikiModelController.h; sourceTree = "<group>"; };
+		B588B769145B673000F29DC9 /* wikiModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wikiModelController.m; sourceTree = "<group>"; };
+		B588B76C145B673000F29DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		B588B76F145B673000F29DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		B5C80186145F88EC00358324 /* Licenses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Licenses.plist; sourceTree = "<group>"; };
+		B5C80189145F88F700358324 /* LicensePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicensePickerViewController.h; sourceTree = "<group>"; };
+		B5C8018A145F88F700358324 /* LicensePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicensePickerViewController.m; sourceTree = "<group>"; };
+		B5C8018B145F88F700358324 /* LicensePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicensePickerViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B588B749145B673000F29DC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B588B751145B673000F29DC9 /* UIKit.framework in Frameworks */,
+				B588B753145B673000F29DC9 /* Foundation.framework in Frameworks */,
+				B588B755145B673000F29DC9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B588B741145B672F00F29DC9 = {
+			isa = PBXGroup;
+			children = (
+				B588B756145B673000F29DC9 /* Wikipedia Image Uploader */,
+				B588B74F145B673000F29DC9 /* Frameworks */,
+				B588B74D145B673000F29DC9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B588B74D145B673000F29DC9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B588B74C145B673000F29DC9 /* Wikipedia Image Uploader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B588B74F145B673000F29DC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B588B750145B673000F29DC9 /* UIKit.framework */,
+				B588B752145B673000F29DC9 /* Foundation.framework */,
+				B588B754145B673000F29DC9 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B588B756145B673000F29DC9 /* Wikipedia Image Uploader */ = {
+			isa = PBXGroup;
+			children = (
+				B588B75F145B673000F29DC9 /* wikiAppDelegate.h */,
+				B588B760145B673000F29DC9 /* wikiAppDelegate.m */,
+				B588B762145B673000F29DC9 /* wikiRootViewController.h */,
+				B588B763145B673000F29DC9 /* wikiRootViewController.m */,
+				B588B765145B673000F29DC9 /* wikiDataViewController.h */,
+				B588B766145B673000F29DC9 /* wikiDataViewController.m */,
+				B53BBFF0145F77680057447B /* SettingsView.h */,
+				B53BBFF1145F77680057447B /* SettingsView.m */,
+				B53BBFF2145F77680057447B /* SettingsView.xib */,
+				B5C80189145F88F700358324 /* LicensePickerViewController.h */,
+				B5C8018A145F88F700358324 /* LicensePickerViewController.m */,
+				B5C8018B145F88F700358324 /* LicensePickerViewController.xib */,
+				B5158791145E2CCB003C0AE3 /* SearchResult.h */,
+				B5158792145E2CCB003C0AE3 /* SearchResult.m */,
+				B588B768145B673000F29DC9 /* wikiModelController.h */,
+				B588B769145B673000F29DC9 /* wikiModelController.m */,
+				B588B76B145B673000F29DC9 /* MainStoryboard_iPhone.storyboard */,
+				B588B76E145B673000F29DC9 /* MainStoryboard_iPad.storyboard */,
+				B588B757145B673000F29DC9 /* Supporting Files */,
+			);
+			path = "Wikipedia Image Uploader";
+			sourceTree = "<group>";
+		};
+		B588B757145B673000F29DC9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5C80186145F88EC00358324 /* Licenses.plist */,
+				B53BBFE1145F75D10057447B /* 19-gear.png */,
+				B53BBFE2145F75D10057447B /* 74-location.png */,
+				B588B758145B673000F29DC9 /* Wikipedia Image Uploader-Info.plist */,
+				B588B759145B673000F29DC9 /* InfoPlist.strings */,
+				B588B75C145B673000F29DC9 /* main.m */,
+				B588B75E145B673000F29DC9 /* Wikipedia Image Uploader-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B588B74B145B673000F29DC9 /* Wikipedia Image Uploader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B588B773145B673000F29DC9 /* Build configuration list for PBXNativeTarget "Wikipedia Image Uploader" */;
+			buildPhases = (
+				B588B748145B673000F29DC9 /* Sources */,
+				B588B749145B673000F29DC9 /* Frameworks */,
+				B588B74A145B673000F29DC9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Wikipedia Image Uploader";
+			productName = "Wikipedia Image Uploader";
+			productReference = B588B74C145B673000F29DC9 /* Wikipedia Image Uploader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B588B743145B672F00F29DC9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Benbenbob Software";
+			};
+			buildConfigurationList = B588B746145B672F00F29DC9 /* Build configuration list for PBXProject "Wikipedia Image Uploader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B588B741145B672F00F29DC9;
+			productRefGroup = B588B74D145B673000F29DC9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B588B74B145B673000F29DC9 /* Wikipedia Image Uploader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B588B74A145B673000F29DC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B588B75B145B673000F29DC9 /* InfoPlist.strings in Resources */,
+				B588B76D145B673000F29DC9 /* MainStoryboard_iPhone.storyboard in Resources */,
+				B588B770145B673000F29DC9 /* MainStoryboard_iPad.storyboard in Resources */,
+				B53BBFE3145F75D10057447B /* 19-gear.png in Resources */,
+				B53BBFE4145F75D10057447B /* 74-location.png in Resources */,
+				B53BBFF4145F77680057447B /* SettingsView.xib in Resources */,
+				B5C80187145F88EC00358324 /* Licenses.plist in Resources */,
+				B5C8018D145F88F700358324 /* LicensePickerViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B588B748145B673000F29DC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B588B75D145B673000F29DC9 /* main.m in Sources */,
+				B588B761145B673000F29DC9 /* wikiAppDelegate.m in Sources */,
+				B588B764145B673000F29DC9 /* wikiRootViewController.m in Sources */,
+				B588B767145B673000F29DC9 /* wikiDataViewController.m in Sources */,
+				B588B76A145B673000F29DC9 /* wikiModelController.m in Sources */,
+				B5158793145E2CCC003C0AE3 /* SearchResult.m in Sources */,
+				B53BBFF3145F77680057447B /* SettingsView.m in Sources */,
+				B5C8018C145F88F700358324 /* LicensePickerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B588B759145B673000F29DC9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B588B75A145B673000F29DC9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B588B76B145B673000F29DC9 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B588B76C145B673000F29DC9 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		B588B76E145B673000F29DC9 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B588B76F145B673000F29DC9 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B588B771145B673000F29DC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B588B772145B673000F29DC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B588B774145B673000F29DC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wikipedia Image Uploader/Wikipedia Image Uploader-Prefix.pch";
+				INFOPLIST_FILE = "Wikipedia Image Uploader/Wikipedia Image Uploader-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B588B775145B673000F29DC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wikipedia Image Uploader/Wikipedia Image Uploader-Prefix.pch";
+				INFOPLIST_FILE = "Wikipedia Image Uploader/Wikipedia Image Uploader-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B588B746145B672F00F29DC9 /* Build configuration list for PBXProject "Wikipedia Image Uploader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B588B771145B673000F29DC9 /* Debug */,
+				B588B772145B673000F29DC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B588B773145B673000F29DC9 /* Build configuration list for PBXNativeTarget "Wikipedia Image Uploader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B588B774145B673000F29DC9 /* Debug */,
+				B588B775145B673000F29DC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B588B743145B672F00F29DC9 /* Project object */;
+}
