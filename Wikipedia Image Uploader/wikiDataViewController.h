@@ -18,7 +18,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <ImageIO/ImageIO.h>
 
-@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, CommonsUploadDelegate, CLLocationManagerDelegate> {
+@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, CommonsUploadDelegate, CLLocationManagerDelegate> {
 	IBOutlet UIActivityIndicatorView *indView;
 	IBOutlet UIWebView *webView;
 	IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -50,6 +50,7 @@
 - (IBAction)searchButtonPressed:(id)sender;
 - (IBAction)settingsButtonPressed:(id)sender;
 - (IBAction)cameraButtonPressed:(id)sender;
+- (IBAction)locationButtonPressed:(id)sender;
 - (IBAction)showImagePicker:(id)sender;
 - (void)searchForQuery:(NSString *)query;
 - (NSString *)convertMobilePageFromURL:(NSURL *)pageURL;

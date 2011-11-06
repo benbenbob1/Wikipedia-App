@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UIImage *thumbImg;
 @property (strong, nonatomic) NSString *title, *desc, *imgURL;
 @property (strong, nonatomic) NSString *pubDate, *comment, *actualURL, *mediaType;
-@property (strong, nonatomic) NSDictionary *exifData;
+@property (strong, nonatomic) NSMutableDictionary *exifData;
 @property (nonatomic) CGSize imgSize;
 
 @end

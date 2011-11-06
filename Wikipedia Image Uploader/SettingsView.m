@@ -148,11 +148,29 @@
 		}
 		else if (indexPath.row == 2) {
 			cell.textLabel.text = @"Attach GPS coordinates";
+			/*if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
+				UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+				[switchView setTag:ADD_GPS_COORDS_TAG];
+				[switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+				[switchView setOn:[defs boolForKey:ADD_GPS_COORDS_KEY]];
+				[cell setAccessoryView:switchView];
+			}
+			else {
+				cell.detailTextLabel.text = @"Disabled";
+			}*/
 			UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
 			[switchView setTag:ADD_GPS_COORDS_TAG];
 			[switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
 			[switchView setOn:[defs boolForKey:ADD_GPS_COORDS_KEY]];
 			[cell setAccessoryView:switchView];
+			if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
+				[switchView setEnabled:YES];
+			}
+			else {
+				[switchView setEnabled:NO];
+				[switchView setOnTintColor:[UIColor grayColor]];
+			}
+			
 		}
 	}
 	else if (indexPath.section == 2) {
@@ -246,7 +264,7 @@
 		NSLog(@"kNotifyWhenNearbyTag changed!");
 		[defs setBool:![defs boolForKey:NOTIFY_WHEN_NEARBY_KEY] forKey:NOTIFY_WHEN_NEARBY_KEY];
 	}
-	else if ([sender tag] == ADD_GPS_COORDS_TAG) {
+	else if ([sender tag] == ADD_GPS_COORDS_TAG && ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)) {
 		NSLog(@"kAddGPSCoordsTag changed!");
 		if ([defs boolForKey:ADD_GPS_COORDS_KEY] && [self.presentedViewController class] == [wikiDataViewController class]) {
 			[(wikiDataViewController *)self.presentingViewController getLocation];

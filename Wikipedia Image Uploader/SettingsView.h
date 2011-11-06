@@ -11,6 +11,7 @@
 #import "LoginPage.h"
 #import "Configuration.h"
 #import "wikiDataViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface SettingsView : UIViewController <UITableViewDataSource, UITableViewDelegate, LicensePickerDelegate> {
 	IBOutlet UITableView *settingsTable;

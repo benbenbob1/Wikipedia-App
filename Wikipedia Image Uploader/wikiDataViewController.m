@@ -214,6 +214,11 @@
 	[self presentModalViewController:settingsPage animated:YES];
 }
 
+- (IBAction)locationButtonPressed:(id)sender {
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"This button does nothing, it would just do the same thing as what the button in the Wikipedia app already does" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	[alert show];
+}
+
 - (IBAction)historyControl:(UISegmentedControl *)sender {
 	NSLog(@"Hist Cont! %i pressed", [historyControlButton selectedSegmentIndex]);
 	//[[self undoManager] disableUndoRegistration];
@@ -245,6 +250,7 @@
 #pragma mark - Image Chooser Stuff
 
 - (IBAction)showImagePicker:(id)sender {
+	NSLog(@"Showing img picker");
 	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
 	[picker setDelegate:self];
 	[picker setAllowsEditing:NO];
@@ -270,7 +276,12 @@
 		popoverController = popover;
 	}
 	else {
-		[self presentModalViewController:picker animated:YES];
+		if (self.isFirstResponder) {
+			[self presentModalViewController:picker animated:YES];
+		}
+		else {
+			[self.presentedViewController presentModalViewController:picker animated:YES];
+		}
 	}
 }
 
@@ -331,7 +342,13 @@
 	
 	ImageDetailsViewController *imgDetailsVC = [[ImageDetailsViewController alloc] init];
 	[imgDetailsVC setUpload:upload];
-	[self presentModalViewController:imgDetailsVC animated:YES];
+	//[self presentModalViewController:imgDetailsVC animated:YES];
+	if (self.isFirstResponder) {
+		[self presentModalViewController:imgDetailsVC animated:YES];
+	}
+	else {
+		[self.presentedViewController presentModalViewController:imgDetailsVC animated:YES];
+	}
 	//[upload setImageTitle:[NSString stringWithFormat:@"%@.jpg", @"Test Title"]];
 	//[upload setDescription:@"Test Description"];
 	/*ImageUploadViewController *imgUploader = [[ImageUploadViewController alloc] init];
@@ -534,6 +551,11 @@
 		[searchResultsTable setFrame:CGRectMake(0, [topNavBar frame].size.height, searchResultsTable.frame.size.width, [searchBar frame].origin.y-([topNavBar frame].origin.y+[topNavBar frame].size.height))];
 	}];*/
 	CGRect appSize =  [(UIScreen *)[[UIScreen screens] objectAtIndex:0] applicationFrame];
+	if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+		CGFloat tempFloat = appSize.size.width;
+		appSize.size.width = appSize.size.height;
+		appSize.size.height = tempFloat;
+	}
 	[UIView animateWithDuration:0.25 animations:^(void){
 		[searchBar setCenter:CGPointMake([searchBar center].x, appSize.size.height-[searchBar frame].size.height/2)];
 		[bottomNavBar setCenter:CGPointMake([bottomNavBar center].x, appSize.size.height-[bottomNavBar frame].size.height/2)];

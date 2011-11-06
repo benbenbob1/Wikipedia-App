@@ -11,16 +11,25 @@
 #import "Configuration.h"
 #import "LoginPage.h"
 #import "ServerImageDetailViewController.h"
+#import "ImageUploadViewController.h"
+#import "ImageDetailsViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+#import "wikiDataViewController.h"
 
-@interface ManageImagesPage : UITableViewController <UINavigationControllerDelegate, NSXMLParserDelegate> {
+@interface ManageImagesPage : UITableViewController <UINavigationControllerDelegate, NSXMLParserDelegate, UIPopoverControllerDelegate, UIImagePickerControllerDelegate> {
 	
 	NSMutableArray *imagesArr;
 	WikiImage *result;
 	NSMutableString *currentElementValue;
-	NSDateFormatter *df;
+	UIPopoverController *popoverController;
+	//NSDateFormatter *df;
 }
 
 - (void)loadImages;
 - (void)doneButtonAction;
+- (void)uploadButtonAction:(UIBarButtonItem *)sender;
+- (IBAction)showImagePicker:(id)sender;
+- (void)uploadImageFromURL:(NSURL *)url image:(UIImage *)imageToUpload;
 
 @end

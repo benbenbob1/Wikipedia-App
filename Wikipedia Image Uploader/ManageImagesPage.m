@@ -14,11 +14,11 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-		if (!df) {
+		/*if (!df) {
 			df = [[NSDateFormatter alloc] init];
 			[df setLenient:YES];
 			[df setFormatterBehavior:NSDateFormatterMediumStyle];
-		}
+		}*/
         imagesArr = [[NSMutableArray alloc] init];
 		[self loadImages];
     }
@@ -46,10 +46,21 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonAction)];
 	self.navigationItem.leftBarButtonItem = doneButton;
+	
+	UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Upload new" style:UIBarButtonItemStyleBordered target:self action:@selector(uploadButtonAction:)];
+	self.navigationItem.rightBarButtonItem = uploadButton;
 }
 
 - (void)doneButtonAction {
 	[self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)uploadButtonAction:(UIBarButtonItem *)sender {
+	//NSLog(@"Presenting: %@", self.navigationController.delegate);
+	[(wikiDataViewController *)self.navigationController.delegate showImagePicker:sender];
+	/*wikiDataViewController *origVC = [[wikiDataViewController alloc] init];
+	[origVC showImagePicker:sender];
+	[self presentModalViewController:origVC animated:YES];*/
 }
 
 - (void)viewDidUnload
@@ -123,6 +134,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil && [imagesArr count]>0) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+		[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 		UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[(WikiImage *)[imagesArr objectAtIndex:indexPath.row] imgURL]]]];
 		[cell.imageView setImage:img];
 		cell.textLabel.text = [[(WikiImage *)[imagesArr objectAtIndex:indexPath.row] title] stringByReplacingOccurrencesOfString:PART_OF_FILENAME_TO_REMOVE withString:@""];
@@ -133,6 +145,7 @@
 	else if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 		cell.textLabel.text = @"You have not uploaded any images yet";
+		[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 		[cell.textLabel setAdjustsFontSizeToFitWidth:YES];
 	}
     
@@ -241,5 +254,101 @@
 	}
 	currentElementValue = nil;
 }
+
+/*#pragma mark - Image Chooser Stuff
+
+- (IBAction)showImagePicker:(id)sender {
+	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+	[picker setDelegate:self];
+	[picker setAllowsEditing:NO];
+	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		picker.showsCameraControls = YES;
+		picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+	}
+	else {
+		picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+	}
+	if (IS_IPAD) {
+		UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:picker];
+		if ([sender class] == [UIBarButtonItem class]) {
+			[popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		else if (sender == nil) {
+			[popover presentPopoverFromRect:CGRectZero inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		else {
+			[popover presentPopoverFromRect:CGRectMake([sender frame].origin.x, [sender frame].origin.y, [sender frame].size.width, [sender frame].size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+		}
+		popoverController = popover;
+	}
+	else {
+		[self presentModalViewController:picker animated:YES];
+	}
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	if (IS_IPAD) {
+		[popoverController dismissPopoverAnimated:NO];
+	}
+	else {
+		[picker.presentingViewController dismissModalViewControllerAnimated:NO];
+	}
+	NSMutableDictionary *metaData = [NSMutableDictionary dictionaryWithDictionary:[info valueForKey:UIImagePickerControllerMediaMetadata]];
+	
+    [metaData setObject:[self currentLocation] forKey: (NSString *)kCGImagePropertyGPSDictionary];
+    // Store the image on the Camera Roll
+	UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    if( picker.sourceType == UIImagePickerControllerSourceTypeCamera ) {
+        Class assestsLibClass = (NSClassFromString(@"ALAssetsLibrary"));
+        if( assestsLibClass != nil ) {
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            ALAssetsLibraryWriteImageCompletionBlock completionBlock = ^(NSURL *newURL, NSError *error) {
+                if (error) {
+                    NSLog( @"Could not write image to photoalbum: %@", error );
+                } else {
+                    [self uploadImageFromURL:newURL image:img];
+                }
+            };
+			
+            [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:metaData completionBlock:completionBlock];
+            return;
+        } else {
+            //self.image = [self.image correctOrientation:self.image];
+            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil);
+        }
+    }
+	NSLog(@"Picking Finished, info: %@", [info valueForKey:UIImagePickerControllerMediaURL]);
+	[self uploadImageFromURL:[info valueForKey:UIImagePickerControllerMediaURL] image:img];
+	
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+	if (IS_IPAD) {
+		[(UIPopoverController *)picker.parentViewController dismissPopoverAnimated:YES];
+	}
+	else {
+		[picker.presentingViewController dismissModalViewControllerAnimated:YES];
+	}
+}
+
+- (void)uploadImageFromURL:(NSURL *)url image:(UIImage *)imageToUpload {
+	NSLog(@"Upload img from url (%@)", url.absoluteString);
+	CommonsUpload *upload = [[CommonsUpload alloc] init];
+	[upload setDelegate:self];
+	[upload setOriginalImage:imageToUpload];
+	[upload setImageURL:url];
+	
+	ImageDetailsViewController *imgDetailsVC = [[ImageDetailsViewController alloc] init];
+	[imgDetailsVC setUpload:upload];
+	[self presentModalViewController:imgDetailsVC animated:YES];
+	//[upload setImageTitle:[NSString stringWithFormat:@"%@.jpg", @"Test Title"]];
+	//[upload setDescription:@"Test Description"];
+	//[upload uploadImage];
+	//[self.presentedViewController.navigationController pushViewController:imgUploader animated:YES];
+}*/
 
 @end

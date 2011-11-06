@@ -26,6 +26,20 @@
 	return [NSString stringWithFormat:@"%@ - %@", self.title, self.desc];
 }
 
+- (void)setPubDate:(NSString *)aPubDate {
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	[df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"us"]];
+	[df setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+	[df setFormatterBehavior:NSDateFormatterBehaviorDefault];
+	NSDate *date = [df dateFromString:aPubDate];
+	[df setDoesRelativeDateFormatting:YES];
+	//[df setDateFormat:@"zzz"];
+	//NSLog(@"Zone: %@", [df stringFromDate:date]);
+	//[df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+	[df setDateFormat:@"EEE, MMM d, yyyy 'at' h:mm a"];
+	pubDate = [df stringFromDate:date];
+}
+
 /*- (void)setTitle:(NSString *)aTitle {
 	
 }*/
@@ -34,7 +48,8 @@
 	if (self.title) {
 		NSString *str = [[[NSString stringWithFormat:@"%@?format=xml&action=query&titles=%@&prop=imageinfo&iiprop=url|size|metadata|mediatype|comment", API_URL, self.title] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByReplacingOccurrencesOfString:@"|" withString:@"%7c"];
 		NSURL *url = [NSURL URLWithString:str];
-		NSString *strParse = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];
+		//NSString *strParse = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];
+		
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
 		[parser setDelegate:self];
 		[parser parse];
@@ -53,7 +68,18 @@
 		[self setImgSize:CGSizeMake([[attributeDict objectForKey:@"width"] floatValue], [[attributeDict objectForKey:@"height"] floatValue])];
 		[self setMediaType:[attributeDict objectForKey:@"mediatype"]];
 		[self setActualURL:[attributeDict objectForKey:@"url"]];
-		[self setExifData:[[attributeDict objectForKey:@"metadata"] dictionaryRepresentation]];
+		//[self setExifData:[attributeDict objectForKey:@"metadata"]];
+		//NSLog(@"Dictionary: %@", [attributeDict objectForKey:@"metadata"]);
+	}
+	
+	if ([elementName isEqualToString:@"metadata"] && [[attributeDict allKeys] count] > 0) {
+		//NSLog(@"metadata found, setting %@ for key %@", [attributeDict objectForKey:@"value"], [attributeDict objectForKey:@"name"]);
+		if (!self.exifData) {
+			self.exifData = [[NSMutableDictionary alloc] init];
+		}
+		NSDictionary *newDict = [[NSDictionary alloc] initWithObjectsAndKeys:[attributeDict objectForKey:@"value"], [attributeDict objectForKey:@"name"], nil];
+		[self.exifData addEntriesFromDictionary:newDict];
+		//NSLog(@"Now: %@ (added %@)", [self.exifData description], [newDict description]);
 	}
 	//NSLog(@"Attributes for %@: %@", elementName, attributeDict);
 }
@@ -71,7 +97,7 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
 	if ([elementName isEqualToString:@"imageinfo"]) {
 		//[self.tableView reloadData];
-		NSLog(@"Done! com: %@, size: %@, etc.", self.comment, NSStringFromCGSize(self.imgSize));
+		//NSLog(@"Done! exifData: %@, size: %@, etc.", [self.exifData description], NSStringFromCGSize(self.imgSize));
 		return;
 	}
 	/*else if ([elementName isEqualToString:@"ii"]) {
