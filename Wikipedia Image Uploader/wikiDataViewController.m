@@ -37,6 +37,11 @@
 	shouldIgnoreAction = YES;
 	[self webViewLoadURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"]];
 	[webView setScalesPageToFit:YES];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+	[self.view setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:ADD_GPS_COORDS_KEY]) {
+		[self getLocation];
+	}
 }
 
 - (void)viewDidUnload
@@ -60,8 +65,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-	[self.view setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+	
 	[searchResultsTable removeFromSuperview];
 	searchResultsTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 	[searchResultsTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
@@ -71,6 +75,7 @@
 	[webView setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
 	results = [[NSMutableArray alloc] init];
 	[searchResultsTable setHidden:YES];
+	
 	/*NSString *wikiMainSite = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://en.m.wikipedia.org"] encoding:NSUTF8StringEncoding error:NULL];
 	//wikiMainSite = [[wikiMainSite stringByReplacingOccurrencesOfString:@"<div id='searchbox'>" withString:@""] stringByReplacingOccurrencesOfString:@"<div id='header'>" withString:@""];
 	
@@ -229,7 +234,12 @@
 }
 
 - (IBAction)cameraButtonPressed:(id)sender {
-	[self showImagePicker:sender];
+	//[self showImagePicker:sender];
+	ManageImagesPage *mIP = [[ManageImagesPage alloc] init];
+	UINavigationController *navCon = [[UINavigationController alloc] init];
+	[navCon setDelegate:self];
+	[navCon pushViewController:mIP animated:NO];
+	[self presentViewController:navCon animated:YES completion:NULL];
 }
 
 #pragma mark - Image Chooser Stuff
@@ -272,8 +282,33 @@
 	else {
 		[picker.presentingViewController dismissModalViewControllerAnimated:NO];
 	}
+	NSMutableDictionary *metaData = [NSMutableDictionary dictionaryWithDictionary:[info valueForKey:UIImagePickerControllerMediaMetadata]];
+	
+    [metaData setObject:[self currentLocation] forKey: (NSString *)kCGImagePropertyGPSDictionary];
+    // Store the image on the Camera Roll
+	UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    if( picker.sourceType == UIImagePickerControllerSourceTypeCamera ) {
+        Class assestsLibClass = (NSClassFromString(@"ALAssetsLibrary"));
+        if( assestsLibClass != nil ) {
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            ALAssetsLibraryWriteImageCompletionBlock completionBlock = ^(NSURL *newURL, NSError *error) {
+                if (error) {
+                    NSLog( @"Could not write image to photoalbum: %@", error );
+                } else {
+                    [self uploadImageFromURL:newURL image:img];
+                }
+            };
+			
+            [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:metaData completionBlock:completionBlock];
+            return;
+        } else {
+            //self.image = [self.image correctOrientation:self.image];
+            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil);
+        }
+    }
 	NSLog(@"Picking Finished, info: %@", [info valueForKey:UIImagePickerControllerMediaURL]);
-	[self uploadImageFromURL:[info valueForKey:UIImagePickerControllerMediaURL] image:[info valueForKey:UIImagePickerControllerOriginalImage]];
+	[self uploadImageFromURL:[info valueForKey:UIImagePickerControllerMediaURL] image:img];
 	
 }
 
@@ -599,6 +634,103 @@
 		[self lowerSearchBar];
 		[self closeSearchResults];
 	}
+}
+
+#pragma mark - Location Stuff
+
+- (void)getLocation {
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:ADD_GPS_COORDS_KEY]) {
+		if (![CLLocationManager locationServicesEnabled]) {
+			NSLog(@"No GPS avaliable");
+			return;
+		}
+		NSLog(@"Doing GPS stuff");
+		if (nil == locMan)
+			locMan = [[CLLocationManager alloc] init];
+		//[locMan setPurpose:@"To add GPS data to an image"];
+		[locMan setDelegate:self];
+		[locMan setDistanceFilter:10.0];
+		[locMan setDesiredAccuracy:kCLLocationAccuracyBest];
+		/*[uploadButton setTitle:@"(Getting location)" forState:UIControlStateDisabled];
+		 [uploadButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+		 [uploadButton setContentEdgeInsets:UIEdgeInsetsMake(0, 7, 0, 20)];
+		 [uploadButton setEnabled:NO];
+		 [gettingLocationIndicator startAnimating];*/
+		[locMan startUpdatingLocation];
+	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+	//[gettingLocationIndicator stopAnimating];
+	NSLog(@"Found Location, %@", newLocation);
+	//gotLoc = YES;
+	loc = newLocation;
+	/*if ([[titleField text] length]>0) {
+		[uploadButton setEnabled:YES];
+	}
+	else {
+		[uploadButton setTitle:@"Upload" forState:UIControlStateDisabled];
+	}
+	[uploadButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+	[uploadButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];*/
+	[manager stopUpdatingLocation];
+}
+
+- (NSMutableDictionary *)currentLocation {
+    NSMutableDictionary *locDict = [[NSMutableDictionary alloc] init];
+	
+    if (loc != nil) {
+        CLLocationDegrees exifLatitude = loc.coordinate.latitude;
+        CLLocationDegrees exifLongitude = loc.coordinate.longitude;
+        CLLocationDistance exifAltitude = loc.altitude;
+		
+        [locDict setObject:@"2.2.0.0" forKey:(NSString *)kCGImagePropertyGPSVersion];
+        [locDict setObject:loc.timestamp forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
+		
+        if (exifLatitude < 0.0) {
+			exifLatitude = exifLatitude*(-1);
+			[locDict setObject:@"S" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
+        } else {
+			[locDict setObject:@"N" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
+        }
+        [locDict setObject:[NSNumber numberWithFloat:exifLatitude] forKey:(NSString*)kCGImagePropertyGPSLatitude];
+		
+        if (exifLongitude < 0.0) {
+			exifLongitude=exifLongitude*(-1);
+			[locDict setObject:@"W" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
+        } else {
+			[locDict setObject:@"E" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
+        }
+        [locDict setObject:[NSNumber numberWithFloat:exifLongitude] forKey:(NSString*) kCGImagePropertyGPSLongitude];
+        
+        if (!isnan(exifAltitude)){
+            if (exifAltitude < 0) {
+                exifAltitude = -exifAltitude;
+                [locDict setObject:@"1" forKey:(NSString *)kCGImagePropertyGPSAltitudeRef];
+            } else {
+                [locDict setObject:@"0" forKey:(NSString *)kCGImagePropertyGPSAltitudeRef];
+            }
+            [locDict setObject:[NSNumber numberWithFloat:exifAltitude] forKey:(NSString *)kCGImagePropertyGPSAltitude];
+        }
+        
+        // Speed, must be converted from m/s to km/h
+        if (loc.speed >= 0){
+            [locDict setObject:@"K" forKey:(NSString *)kCGImagePropertyGPSSpeedRef];
+            [locDict setObject:[NSNumber numberWithFloat:loc.speed*3.6] forKey:(NSString *)kCGImagePropertyGPSSpeed];
+        }
+		
+        // Heading
+        if (loc.course >= 0){
+            [locDict setObject:@"T" forKey:(NSString *)kCGImagePropertyGPSTrackRef];
+            [locDict setObject:[NSNumber numberWithFloat:loc.course] forKey:(NSString *)kCGImagePropertyGPSTrack];
+        }
+    }
+	
+    return locDict;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+	NSLog(@"GPS Error");
 }
 
 @end

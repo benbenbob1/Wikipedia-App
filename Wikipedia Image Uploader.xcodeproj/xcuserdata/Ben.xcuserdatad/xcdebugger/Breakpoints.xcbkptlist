@@ -9,11 +9,25 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Wikipedia Image Uploader/wikiDataViewController.m"
-         timestampString = "341864171.388061"
+         timestampString = "341961741.030276"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "130"
-         endingLineNumber = "130"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
+         landmarkName = "-actionButtonPressed:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Wikipedia Image Uploader/wikiDataViewController.m"
+         timestampString = "341961741.030276"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
          landmarkName = "-shouldAutorotateToInterfaceOrientation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -23,26 +37,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Wikipedia Image Uploader/wikiDataViewController.m"
-         timestampString = "341864171.388061"
+         timestampString = "342049216.714862"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
-         landmarkName = "-viewDidDisappear:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Wikipedia Image Uploader/wikiDataViewController.m"
-         timestampString = "341876556.754103"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "302"
-         endingLineNumber = "302"
-         landmarkName = "-uploadImageFromURL:image:"
+         startingLineNumber = "353"
+         endingLineNumber = "353"
+         landmarkName = "-webViewLoadURL:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

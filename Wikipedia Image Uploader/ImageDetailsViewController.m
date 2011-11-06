@@ -31,11 +31,16 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	[titleField addTarget:self action:@selector(textFieldChanged) forControlEvents:UIControlEventEditingChanged];
+	[titleField addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
 }
 
 - (void)viewDidUnload
@@ -67,6 +72,10 @@
 	if ([[titleField text] length]>0) {
 		[uploadButton setEnabled:YES];
 	}
+	/*else if (gotLoc) {
+		[uploadButton setTitle:@"Upload" forState:UIControlStateDisabled];
+		[uploadButton setEnabled:NO];
+	}*/
 	else {
 		[uploadButton setEnabled:NO];
 	}
@@ -94,6 +103,7 @@
 		textField.textColor = [UIColor blackColor];
 		[uploadButton setEnabled:YES];
 	}
+	[textField resignFirstResponder];
 }
 
 @end

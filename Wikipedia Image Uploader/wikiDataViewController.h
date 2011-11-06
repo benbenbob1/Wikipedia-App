@@ -11,10 +11,14 @@
 #import "SettingsView.h"
 #import "Configuration.h"
 #import "CommonsUpload.h"
+#import "ManageImagesPage.h"
 #import "ImageUploadViewController.h"
 #import "ImageDetailsViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
+#import <ImageIO/ImageIO.h>
 
-@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationBarDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, CommonsUploadDelegate> {
+@interface wikiDataViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, NSXMLParserDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, CommonsUploadDelegate, CLLocationManagerDelegate> {
 	IBOutlet UIActivityIndicatorView *indView;
 	IBOutlet UIWebView *webView;
 	IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -30,6 +34,8 @@
 	NSMutableArray *results;
 	BOOL didConvertURL, shouldIgnoreAction;
 	UIPopoverController *popoverController;
+	CLLocation *loc;
+	CLLocationManager *locMan;
 }
 
 - (IBAction)historyControl:(UISegmentedControl *)sender;
@@ -50,6 +56,8 @@
 - (void)convertPageAndGo:(NSURL *)pageURL;
 - (void)keyboardDidShow:(NSNotification *)notification;
 - (void)uploadImageFromURL:(NSURL *)url image:(UIImage *)imageToUpload;
+- (NSMutableDictionary *)currentLocation;
+- (void)getLocation;
 
 @property (strong, nonatomic) IBOutlet UILabel *dataLabel;
 @property (strong, nonatomic) id dataObject;

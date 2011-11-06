@@ -10,6 +10,7 @@
 #import "LicensePickerViewController.h"
 #import "LoginPage.h"
 #import "Configuration.h"
+#import "wikiDataViewController.h"
 
 @interface SettingsView : UIViewController <UITableViewDataSource, UITableViewDelegate, LicensePickerDelegate> {
 	IBOutlet UITableView *settingsTable;

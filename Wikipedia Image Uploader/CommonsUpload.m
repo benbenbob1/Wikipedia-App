@@ -332,15 +332,19 @@ NSLog( @"%@", dict );
     assert( upload != nil );
  
     if( [[upload objectForKey:@"result"] caseInsensitiveCompare:@"Success"] != NSOrderedSame ) {
-		if ([[upload objectForKey:@"warnings"] objectForKey:FILENAME_EXISTS_WARNING]) {
+		/*if ([[upload objectForKey:@"warnings"] objectForKey:FILENAME_EXISTS_WARNING]) {
 			[delegate uploadFailed:[NSString stringWithFormat:@"The filename: %@ already exists; aborting.", [[upload objectForKey:@"warnings"] objectForKey:@"exists"]]];
 		}
 		else if ([[upload objectForKey:@"warnings"] objectForKey:BAD_FILENAME_WARNING]) {
 			[delegate uploadFailed:[NSString stringWithFormat:@"Bad filename: %@; aborting.", [[upload objectForKey:@"warnings"] objectForKey:BAD_FILENAME_WARNING]]];
 		}
-		else {
-			[delegate uploadFailed: [NSString stringWithFormat:@"no success response: %@", [upload objectForKey:@"result"]]];
+		else if ([[upload objectForKey:@"warnings"] objectForKey:IMAGE_EXISTS_BUT_DELETED]) {
+			[delegate uploadFailed:[NSString stringWithFormat:@"That image already exists (but was deleted) with the name: %@; aborting.", [[upload objectForKey:@"warnings"] objectForKey:IMAGE_EXISTS_BUT_DELETED]]];
 		}
+		else {*/
+			NSString *fullString = [NSString stringWithFormat:@"Error: Response %@", [[upload objectForKey:@"warnings"] objectForKey:[[[upload objectForKey:@"warnings"] allKeys] objectAtIndex:0]]];
+			[delegate uploadFailed:fullString];
+		//}
         return;
     }
     
@@ -372,10 +376,10 @@ NSLog( @"%@", dict );
     NSDictionary *errorDict = [[dict objectForKey:@"api"] objectForKey: @"error"];
     if( errorDict ) {
         NSMutableDictionary *nsErrorDict = [NSMutableDictionary dictionaryWithCapacity:5];
-        [nsErrorDict setObject: @"Communication failure with server" forKey: NSLocalizedDescriptionKey ];
+        [nsErrorDict setObject:[NSString stringWithFormat:@"Communication failure with server (%@)", [errorDict objectForKey:@"info"]] forKey:NSLocalizedDescriptionKey ];
         [nsErrorDict setObject: [errorDict objectForKey:@"info"] forKey: NSLocalizedFailureReasonErrorKey ];
-NSLog( @"%@", [errorDict objectForKey:@"info"] );
-
+		NSLog( @"%@", [errorDict objectForKey:@"info"] );
+		
         if (error != NULL) {
             *error = [NSError errorWithDomain: @"COMMONS_API_DOMAIN" code: 1 userInfo: nsErrorDict];
         }

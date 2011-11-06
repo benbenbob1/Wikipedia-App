@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Configuration.h"
 #import "CommonsUpload.h"
 #import "ImageUploadViewController.h"
 
@@ -16,6 +17,7 @@
 	IBOutlet UIButton *uploadButton;
 	IBOutlet UILabel *gettingLocationLabel;
 	IBOutlet UIActivityIndicatorView *gettingLocationIndicator;
+	//BOOL gotLoc;
 }
 
 - (IBAction)upload:(id)sender;

@@ -248,7 +248,11 @@
 	}
 	else if ([sender tag] == ADD_GPS_COORDS_TAG) {
 		NSLog(@"kAddGPSCoordsTag changed!");
+		if ([defs boolForKey:ADD_GPS_COORDS_KEY] && [self.presentedViewController class] == [wikiDataViewController class]) {
+			[(wikiDataViewController *)self.presentingViewController getLocation];
+		}
 		[defs setBool:![defs boolForKey:ADD_GPS_COORDS_KEY] forKey:ADD_GPS_COORDS_KEY];
+		
 	}
 	[defs synchronize];
 	[settingsTable reloadData];

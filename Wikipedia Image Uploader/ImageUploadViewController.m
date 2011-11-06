@@ -46,11 +46,11 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    //[[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //[[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 
@@ -92,6 +92,7 @@
     UIAlertView *alert =
     [[UIAlertView alloc] initWithTitle:@"Upload succeeded" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Show upload" ,nil];
     [alert show];
+	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)uploadFailed:(NSString *)error {
@@ -102,7 +103,7 @@
     [alert show];
     //[self.navigationController popToRootViewControllerAnimated:YES];
 	//[self.presentingViewController dismissModalViewControllerAnimated:YES];
-	[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+	//[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex {
@@ -113,7 +114,9 @@
 		}];
     } else if ( buttonIndex == 1 ) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat:DESTINATION_URL, [self.upload.imageTitle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
-		[self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+		[self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+			NSLog(@"completed closing");
+		}];
     }
     //[self.navigationController popToRootViewControllerAnimated:YES];
 } // clickedButtonAtIndex

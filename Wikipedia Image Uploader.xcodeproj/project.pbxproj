@@ -34,6 +34,7 @@
 		B501E75F146099D70001926B /* ImageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B501E75D146099D50001926B /* ImageDetailsViewController.m */; };
 		B501E760146099D70001926B /* ImageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B501E75E146099D60001926B /* ImageDetailsViewController.xib */; };
 		B5158793145E2CCC003C0AE3 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B5158792145E2CCB003C0AE3 /* SearchResult.m */; };
+		B5328DC41461CC8D007B8480 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5328DC31461CC8D007B8480 /* CoreLocation.framework */; };
 		B53BBFE3145F75D10057447B /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = B53BBFE1145F75D10057447B /* 19-gear.png */; };
 		B53BBFE4145F75D10057447B /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = B53BBFE2145F75D10057447B /* 74-location.png */; };
 		B53BBFF3145F77680057447B /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B53BBFF1145F77680057447B /* SettingsView.m */; };
@@ -49,9 +50,15 @@
 		B588B76A145B673000F29DC9 /* wikiModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = B588B769145B673000F29DC9 /* wikiModelController.m */; };
 		B588B76D145B673000F29DC9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B588B76B145B673000F29DC9 /* MainStoryboard_iPhone.storyboard */; };
 		B588B770145B673000F29DC9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B588B76E145B673000F29DC9 /* MainStoryboard_iPad.storyboard */; };
+		B5A4B2761461E6C300A8B307 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A4B2751461E6C300A8B307 /* ImageIO.framework */; };
 		B5C80187145F88EC00358324 /* Licenses.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5C80186145F88EC00358324 /* Licenses.plist */; };
 		B5C8018C145F88F700358324 /* LicensePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C8018A145F88F700358324 /* LicensePickerViewController.m */; };
 		B5C8018D145F88F700358324 /* LicensePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C8018B145F88F700358324 /* LicensePickerViewController.xib */; };
+		B5CD25C914631CF900B11C23 /* ManageImagesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CD25C714631CF900B11C23 /* ManageImagesPage.m */; };
+		B5CD25CA14631CF900B11C23 /* ManageImagesPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CD25C814631CF900B11C23 /* ManageImagesPage.xib */; };
+		B5CD25CD14631E2300B11C23 /* WikiImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CD25CC14631E2300B11C23 /* WikiImage.m */; };
+		B5E4C5001465EE4B00B63BF5 /* ServerImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E4C4FE1465EE4B00B63BF5 /* ServerImageDetailViewController.m */; };
+		B5E4C5011465EE4B00B63BF5 /* ServerImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E4C4FF1465EE4B00B63BF5 /* ServerImageDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +110,7 @@
 		B501E75E146099D60001926B /* ImageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageDetailsViewController.xib; sourceTree = "<group>"; };
 		B5158791145E2CCB003C0AE3 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		B5158792145E2CCB003C0AE3 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		B5328DC31461CC8D007B8480 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B53BBFE1145F75D10057447B /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
 		B53BBFE2145F75D10057447B /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
 		B53BBFF0145F77680057447B /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
@@ -126,10 +134,19 @@
 		B588B769145B673000F29DC9 /* wikiModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wikiModelController.m; sourceTree = "<group>"; };
 		B588B76C145B673000F29DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		B588B76F145B673000F29DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		B5A4B2751461E6C300A8B307 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B5C80186145F88EC00358324 /* Licenses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Licenses.plist; sourceTree = "<group>"; };
 		B5C80189145F88F700358324 /* LicensePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicensePickerViewController.h; sourceTree = "<group>"; };
 		B5C8018A145F88F700358324 /* LicensePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicensePickerViewController.m; sourceTree = "<group>"; };
 		B5C8018B145F88F700358324 /* LicensePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicensePickerViewController.xib; sourceTree = "<group>"; };
+		B5CD25C614631CF900B11C23 /* ManageImagesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageImagesPage.h; sourceTree = "<group>"; };
+		B5CD25C714631CF900B11C23 /* ManageImagesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageImagesPage.m; sourceTree = "<group>"; };
+		B5CD25C814631CF900B11C23 /* ManageImagesPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManageImagesPage.xib; sourceTree = "<group>"; };
+		B5CD25CB14631E2300B11C23 /* WikiImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WikiImage.h; sourceTree = "<group>"; };
+		B5CD25CC14631E2300B11C23 /* WikiImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WikiImage.m; sourceTree = "<group>"; };
+		B5E4C4FD1465EE4B00B63BF5 /* ServerImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerImageDetailViewController.h; sourceTree = "<group>"; };
+		B5E4C4FE1465EE4B00B63BF5 /* ServerImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerImageDetailViewController.m; sourceTree = "<group>"; };
+		B5E4C4FF1465EE4B00B63BF5 /* ServerImageDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServerImageDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +155,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B501E75B146082B30001926B /* AssetsLibrary.framework in Frameworks */,
+				B5A4B2761461E6C300A8B307 /* ImageIO.framework in Frameworks */,
+				B5328DC41461CC8D007B8480 /* CoreLocation.framework in Frameworks */,
 				B501E759146082A70001926B /* SystemConfiguration.framework in Frameworks */,
 				B501E7571460827D0001926B /* MobileCoreServices.framework in Frameworks */,
 				B501E7551460825C0001926B /* libz.1.2.5.dylib in Frameworks */,
@@ -194,6 +213,8 @@
 		B588B741145B672F00F29DC9 = {
 			isa = PBXGroup;
 			children = (
+				B5A4B2751461E6C300A8B307 /* ImageIO.framework */,
+				B5328DC31461CC8D007B8480 /* CoreLocation.framework */,
 				B588B756145B673000F29DC9 /* Wikipedia Image Uploader */,
 				B588B74F145B673000F29DC9 /* Frameworks */,
 				B588B74D145B673000F29DC9 /* Products */,
@@ -232,6 +253,14 @@
 				B501E70E14605B770001926B /* Configuration.h */,
 				B501E7181460628D0001926B /* SFHFKeychainUtils.h */,
 				B501E7191460628D0001926B /* SFHFKeychainUtils.m */,
+				B5CD25CB14631E2300B11C23 /* WikiImage.h */,
+				B5CD25CC14631E2300B11C23 /* WikiImage.m */,
+				B5CD25C614631CF900B11C23 /* ManageImagesPage.h */,
+				B5CD25C714631CF900B11C23 /* ManageImagesPage.m */,
+				B5CD25C814631CF900B11C23 /* ManageImagesPage.xib */,
+				B5E4C4FD1465EE4B00B63BF5 /* ServerImageDetailViewController.h */,
+				B5E4C4FE1465EE4B00B63BF5 /* ServerImageDetailViewController.m */,
+				B5E4C4FF1465EE4B00B63BF5 /* ServerImageDetailViewController.xib */,
 				B588B75F145B673000F29DC9 /* wikiAppDelegate.h */,
 				B588B760145B673000F29DC9 /* wikiAppDelegate.m */,
 				B588B762145B673000F29DC9 /* wikiRootViewController.h */,
@@ -345,6 +374,8 @@
 				B501E72814607DBF0001926B /* ImageUploadViewController.xib in Resources */,
 				B501E750146080320001926B /* LICENSE in Resources */,
 				B501E760146099D70001926B /* ImageDetailsViewController.xib in Resources */,
+				B5CD25CA14631CF900B11C23 /* ManageImagesPage.xib in Resources */,
+				B5E4C5011465EE4B00B63BF5 /* ServerImageDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +409,9 @@
 				B501E74B146080160001926B /* Reachability.m in Sources */,
 				B501E751146080320001926B /* XMLReader.m in Sources */,
 				B501E75F146099D70001926B /* ImageDetailsViewController.m in Sources */,
+				B5CD25C914631CF900B11C23 /* ManageImagesPage.m in Sources */,
+				B5CD25CD14631E2300B11C23 /* WikiImage.m in Sources */,
+				B5E4C5001465EE4B00B63BF5 /* ServerImageDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

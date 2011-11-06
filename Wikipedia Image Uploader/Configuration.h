@@ -33,6 +33,8 @@ enum {
 #define ADD_GPS_COORDS_KEY @"AddGPSCoords"
 #define ADD_GPS_COORDS_TAG kAGC
 
+#define PART_OF_FILENAME_TO_REMOVE @"File:"
+
 //Constants
 #define DESTINATION_URL @"http://commons.wikimedia.org/wiki/File:%@"
 #define API_URL @"http://commons.wikimedia.org/w/api.php"
@@ -42,5 +44,6 @@ enum {
 //Errors
 #define FILENAME_EXISTS_WARNING @"exists"
 #define BAD_FILENAME_WARNING @"badfilename"
+#define IMAGE_EXISTS_BUT_DELETED @"duplicate-archive"
 
 #endif
