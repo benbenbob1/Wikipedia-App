@@ -549,7 +549,6 @@
 		[textField setBackgroundColor:[UIColor whiteColor]];
 		[textField setBorderStyle:UITextBorderStyleRoundedRect];
 		[alert setAutoresizesSubviews:YES];
-		[alert setBackgroundColor:[UIColor redColor]];
 		[textField setPlaceholder:@"Enter the reason for deletion"];
 		[textField becomeFirstResponder];
 		[alert addSubview:textField];

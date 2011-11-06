@@ -37,11 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Wikipedia Image Uploader/wikiDataViewController.m"
-         timestampString = "342296823.536477"
+         timestampString = "342310226.796553"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "370"
-         endingLineNumber = "370"
+         startingLineNumber = "383"
+         endingLineNumber = "383"
          landmarkName = "-webViewLoadURL:"
          landmarkType = "5">
       </FileBreakpoint>

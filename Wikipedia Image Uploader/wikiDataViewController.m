@@ -198,14 +198,27 @@
 }
 
 - (IBAction)searchButtonPressed:(id)sender {
-	[UIView animateWithDuration:0.25 animations:^(void){
-		//[bottomLeftNavBar setFrame:[searchBar frame]];
-		[searchBar setFrame:CGRectMake(0, [searchBar frame].origin.y, [searchBar frame].size.width, [searchBar frame].size.height)];
-		[bottomNavBar setFrame:CGRectMake([searchBar frame].size.width, [bottomNavBar frame].origin.y, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
-		//[bottomLeftNavBar setAlpha:1.0f];
-	} completion:^(BOOL finished) {
-		[bottomFullBar setHidden:YES];
-	}];
+	CGRect appSize =  [(UIScreen *)[[UIScreen screens] objectAtIndex:0] applicationFrame];
+	if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+		[UIView animateWithDuration:0.25 animations:^(void){
+			//[bottomLeftNavBar setFrame:[searchBar frame]];
+			[searchBar setFrame:CGRectMake(0, appSize.size.height-[searchBar frame].size.height, [searchBar frame].size.width, [searchBar frame].size.height)];
+			[bottomNavBar setFrame:CGRectMake([searchBar frame].size.width, appSize.size.height-[bottomNavBar frame].size.height, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
+			//[bottomLeftNavBar setAlpha:1.0f];
+		} completion:^(BOOL finished) {
+			[bottomFullBar setHidden:YES];
+		}];
+	}
+	else {
+		[UIView animateWithDuration:0.25 animations:^(void){
+			//[bottomLeftNavBar setFrame:[searchBar frame]];
+			[searchBar setFrame:CGRectMake(0, appSize.size.width-[searchBar frame].size.height, [searchBar frame].size.width, [searchBar frame].size.height)];
+			[bottomNavBar setFrame:CGRectMake([searchBar frame].size.width, appSize.size.width-[bottomNavBar frame].size.height, [bottomNavBar frame].size.width, [bottomNavBar frame].size.height)];
+			//[bottomLeftNavBar setAlpha:1.0f];
+		} completion:^(BOOL finished) {
+			[bottomFullBar setHidden:YES];
+		}];
+	}
 }
 
 - (IBAction)settingsButtonPressed:(id)sender {
